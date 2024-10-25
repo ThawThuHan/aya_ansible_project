@@ -1,0 +1,9 @@
+[dev]
+fbe ansible_host=172.24.197.20
+web ansible_host=172.24.197.21
+ffc ansible_host=172.24.197.22 ansible_user=user
+fbcc ansible_host=172.24.197.31 ansible_user=misys
+
+[uat-a]
+uat-a-fbcc ansible_host=172.24.197.13
+

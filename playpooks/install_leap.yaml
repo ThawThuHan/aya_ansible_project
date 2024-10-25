@@ -1,0 +1,18 @@
+---
+- name: Install Leap for Upgrade Major Version
+  hosts: uat_b
+  vars_files:
+    - ../vaults/sudo_pass.yml
+  become: true
+  vars:
+    ansible_become_pass: "{{ sudo_passwords.all_password }}"
+  tasks:
+    - name: install leapp
+      yum:
+        name: leapp-upgrade
+      register: result
+
+    - name: check leapp
+      debug:
+        var: result.stdout
+

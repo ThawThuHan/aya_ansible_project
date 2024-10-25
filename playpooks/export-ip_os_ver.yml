@@ -1,0 +1,29 @@
+---
+- hosts: all
+  vars_files:
+     - ../vaults/sudo_pass.yml
+  vars:
+     headers: ip, hostname, os_ver
+
+  tasks:
+    - name: get os ver
+      command: cat /etc/redhat-release
+      register: result
+
+    - name: save csv headers
+      ansible.builtin.lineinfile: 
+        dest: /tmp/export.csv
+        line: "{{ headers }}"
+        create: true
+        state: present
+      delegate_to: localhost
+      run_once: true
+
+    - name: build csv
+      ansible.builtin.lineinfile:
+        dest: /tmp/export.csv
+        line: "{{ ansible_default_ipv4.address }}, {{ ansible_hostname }}, {{ result.stdout }}"
+        create: true
+        state: present
+      delegate_to: localhost
+

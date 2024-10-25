@@ -1,0 +1,56 @@
+---  
+- name: Manage Repositories and Update RHEL 8  
+  hosts: trg
+  become: true
+  vars_files:
+    - ../vaults/sudo_pass.yml
+  vars:
+    ansible_become_pass: "{{ sudo_passwords.all_password }}" 
+  tasks:  
+    - name: Create a local repository configuration file  
+      copy:  
+        dest: /etc/yum.repos.d/rhel7-local.repo  
+        content: |  
+          [rhel-7-server-rpms]
+          name=RHEL7 Server RPMs
+          enabled=0
+          gpgcheck=0
+          baseurl=http://172.24.197.16/rhel7/rhel-7-server-rpms/
+
+          [rhel-7-server-extras-rpms]
+          name=RHEL7 Server Extras RPMs
+          enabled=0
+          gpgcheck=0
+          baseurl=http://172.24.197.16/rhel7/rhel-7-server-extras-rpms/
+      tags: repo_url
+
+    - name: verify the local mirrior repo
+      shell: yum repolist
+      register: status
+
+    - name: retrieve the repo list
+      debug:
+         msg: "{{ status.stdout_lines }}"
+
+    - name: Ensure all packages are up to date
+      yum:
+        name: '*'
+        state: latest
+      register: update_result
+
+    - name: reboot the systems
+      reboot:
+        reboot_timeout: 3600
+      when: update_result.changed
+
+    - name: install leapp
+      yum:
+        name: leapp-upgrade
+
+    - name: check the latest OS version 
+      shell: cat /etc/redhat-release
+      register: rhel_version
+    
+    - name: get the OS version
+      debug:
+        msg: "{{ rhel_version.stdout_lines }}"

@@ -1,0 +1,28 @@
+---
+- name: extract linux users
+  hosts: uat_a
+  vars:
+     headers: ip, hostname, users
+
+  tasks:
+    - name: get users list
+      shell: "cat /etc/passwd | grep -P -o '[a-z].*(?=:):x:([1-9]00[0-9])' | awk -F':' '{print $1}' | sed ':a;N;$!ba;s|\\n| |g'" 
+      register: result
+
+    - name: save csv headers
+      ansible.builtin.lineinfile: 
+        dest: /tmp/export-user.csv
+        line: "{{ headers }}"
+        create: true
+        state: present
+      delegate_to: localhost
+      run_once: true
+
+    - name: build csv
+      ansible.builtin.lineinfile:
+        dest: /tmp/export-user.csv
+        line: "{{ ansible_default_ipv4.address }}, {{ ansible_hostname }}, {{ result.stdout }}"
+        create: true
+        state: present
+      delegate_to: localhost
+

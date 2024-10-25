@@ -1,0 +1,29 @@
+---
+- hosts: sit
+  vars_files:
+    - ../vaults/sudo_pass.yml
+
+  tasks:
+    - name: copy zabbix conf
+      become: true
+      vars:
+        ansible_become_password: "{{ sudo_passwords.all_password }}"
+      ansible.builtin.copy:
+        src: ../files/by_ansible.conf
+        dest: /etc/zabbix/zabbix_agentd.d/by_ansible.conf
+        owner: root
+        group: root
+        mode: '0644'
+      register: result
+
+    - name: restart zabbix agent service
+      become: true
+      vars:
+        ansible_become_password: "{{ sudo_passwords.all_password }}"
+      systemd:
+        name: zabbix-agent
+        state: restarted
+      
+    - debug:
+        var: result.stdout
+

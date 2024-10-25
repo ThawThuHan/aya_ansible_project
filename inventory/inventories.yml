@@ -1,0 +1,68 @@
+dev:
+  hosts:
+    RVVM-UAT-FBCC-02:
+      ansible_host: 172.24.197.31
+    RV-VM-DEV-FFC-01:
+      ansible_host: 172.24.197.22
+    RV-VM-DEV-FBE-WEB-01:
+      ansible_host: 172.24.197.21
+    RV-VM-DEV-FBE-APP-01:
+      ansible_host: 172.24.197.20
+
+uat_a:
+  hosts:
+    RV-VM-UAT-FBCC-01:
+      ansible_host: 172.24.197.13
+    RV-VM-UAT-FBEFFCELS-01:
+      ansible_host: 172.24.197.11
+    RVVM-UATCRDFBE-01:
+      ansible_host: 172.24.197.50
+    RV-VM-UAT-MPM-01:
+      ansible_host: 172.24.197.17
+    RV-VM-UAT-FBDC-01:
+      ansible_host: 172.24.199.12
+#    RV-VM-UAT-MEDRIAN-01: #itself
+#      ansible_host: 172.24.197.16
+
+trg:
+  hosts:
+    #RVVM-TRGBPM-01:
+       #ansible_host: 172.24.197.104
+    RVVM-TRGFBE-WEB-01:
+      ansible_host: 172.24.197.101
+    #RVVM-TRGFBE-APP-01:
+    #ansible_host: 172.24.197.102
+    #RVVM-TRGELS-FFC-01:
+    #ansible_host: 172.24.197.103
+    RVVM-TRGMPM-01:
+      ansible_host: 172.24.197.108
+
+uat_b:
+  hosts:
+    RVVM-UATB-FBEDYN-01:
+      ansible_host: 172.24.197.25
+    RVVM-UATB-FBEWEB-01:
+      ansible_host: 172.24.197.26
+    RVVM-UATB-FFCMQELS-01:
+      ansible_host: 172.24.197.27
+    RVVM-UATB-BPM-01:
+      ansible_host: 172.24.197.30
+
+sit:
+  hosts:
+    RV-VME-SIT-FBEAPP-01:
+      ansible_host: 172.24.192.30
+    RVVM-INTCRD-01:
+      ansible_host: 172.24.192.65
+    RV-VM-SIT-FBEFFCELS-01:
+      ansible_host: 172.24.192.35
+    RV-VME-SIT-FBCCAPP-01:
+      ansible_host: 172.24.192.37
+    RV-VME-SIT-FBCCWEB-14:
+      ansible_host: 172.24.81.25
+    RV-VME-SIT-FBPMAPP-01:
+      ansible_host: 172.24.192.38
+    RV-VME-SIT-MERIDIAN-01:
+      ansible_host: 172.24.192.40
+    RV-VME-SIT-FFCC-01:
+      ansible_host: 172.24.81.29
